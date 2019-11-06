@@ -75,7 +75,7 @@ function add_domain_to_pre_check($domain,$email,$visitor_ip) {
         return $result;
     }
 
-    $sublink = "https://" . $current_link . "/confirm.php?id=" . $uuid;
+    $sublink = "http://" . $current_link . "/confirm.php?id=" . $uuid;
 
     $to      = $email;
     $subject = "Confirm your " . $title . " subscription for " . htmlspecialchars($domain) . ".";

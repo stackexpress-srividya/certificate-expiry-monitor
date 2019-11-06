@@ -62,10 +62,11 @@ function add_domain_check($id,$visitor_ip) {
     }
 
     $domains = validate_domains($pre_check_json_a[$id]['domain']);
+    if (is_array($domains['errors']){
     if (count($domains['errors']) >= 1 ) {
       $result['errors'][] = $domains['errors'];
       return $result;
-    } 
+    } }
 
     $json_a[$id] = array("domain" => $pre_check_json_a[$id]['domain'],
         "email" => $pre_check_json_a[$id]['email'],
@@ -92,7 +93,7 @@ function add_domain_check($id,$visitor_ip) {
         return $result;
     }
 
-    $unsublink = "https://" . $current_link . "/unsubscribe.php?id=" . $id;
+    $unsublink = "http://" . $current_link . "/unsubscribe.php?id=" . $id;
 
     $to      = $json_a[$id]['email'];
     $subject = $title . " subscription confirmed for " . htmlspecialchars($json_a[$id]['domain']) . ".";
@@ -105,7 +106,7 @@ Email  : " . trim(htmlspecialchars($json_a[$id]['email'])) . "
 IP subscription confirmed from: " . htmlspecialchars($visitor_ip) . "
 Date subscribed confirmed: " . date("Y-m-d H:i:s T") . "
 
-We will monitor the certificates for this website. You will receive emails when it is about to expire as described in the FAQ on our website. You can view the FAQ here: https://" . $current_link . ".
+We will monitor the certificates for this website. You will receive emails when it is about to expire as described in the FAQ on our website. You can view the FAQ here: http://" . $current_link . ".
 
 To unsubscribe from notifications for this domain please click or copy and paste the below link in your browser:
 

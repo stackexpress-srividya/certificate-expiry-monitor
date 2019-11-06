@@ -28,14 +28,12 @@ ini_set('default_socket_timeout', 2);
 
 $random_blurp = rand(1000,99999);
 
-$current_domain = "certificatemonitor.org";
+$current_domain = "10.222.111.159/certificate-expiry-monitor";
 $current_link = $current_domain;
 
 // set this to a location outside of your webroot so that it cannot be accessed via the internets.
-
-
-$pre_check_file = '/var/www/certificatemonitor.org/cert-monitor/pre_checks.json';
-$check_file = '/var/www/certificatemonitor.org/cert-monitor/checks.json';
-$deleted_check_file = '/var/www/certificatemonitor.org/cert-monitor/deleted_checks.json';
+$pre_check_file = '/var/www/certificate-expiry-monitor-db/pre_checks.json';
+$check_file = '/var/www/certificate-expiry-monitor-db/checks.json';
+$deleted_check_file = '/var/www/certificate-expiry-monitor-db/deleted_checks.json';
 
 ?>

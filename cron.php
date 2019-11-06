@@ -50,6 +50,7 @@ if (php_sapi_name() == "cli") {
     $email = $value['email'];
 
     $val_domain = validate_domains($domain);
+	    if(is_array($val_domain['errors'])){
     if (count($val_domain['errors']) >= 1 ) {
       $errors = $val_domain['errors'];
       $errortexts = '';
@@ -78,6 +79,7 @@ if (php_sapi_name() == "cli") {
       #  continue;
       #}
     }
+	    }
     $raw_chain = get_raw_chain($domain);
     $counter = 0;
     if (count($raw_chain['chain']) > 0) {

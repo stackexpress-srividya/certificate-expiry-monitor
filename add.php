@@ -33,11 +33,13 @@ if ( isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['domains'
   }
 
   $domains = validate_domains($_POST['domains']);
+  if (is_array($domains['errors'])){
   if ( count($domains['errors']) >= 1 ) {
     foreach ($domains['errors'] as $key => $value) {
       $errors[] = $value;
     }
   } 
+  }
   
   if (is_array($errors) && count($errors) != 0) {
     $errors = array_unique($errors);
