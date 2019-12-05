@@ -56,3 +56,10 @@ Set up the cronjob to run once a day:
 
 The default timeout for checks is 2 seconds. If this is too fast for your internal services, this can be raised in the `variables.php` file.
 
+Setup email.php with mail gun
+
+replace key, domain and from address in the function mailgun to activate the mailgun  
+
+$domain = "yourdomain.org";
+$config['api_key'] = "XXXXXXXXXXXXXXXXXXX"; 
+$body['from'] = "Mailgun Sandbox <postmaster@yourfromemail.mailgun.org>";
