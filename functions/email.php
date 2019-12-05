@@ -59,7 +59,7 @@ function send_error_mail($domain, $email, $errors) {
           'List-Unsubscribe: <https://' . $current_link . "/unsubscribe.php?id=" . $id . ">" . "\r\n" .
           'X-Mailer: PHP/4.1.1';  
 
-      if (mail($to, $subject, $message, $headers) === true) {
+      if (mailgun($to, $subject, $message, $headers) == true) {
           echo "\nError mail sent to $to.\n";
           return true;
       } else {
@@ -120,7 +120,7 @@ function send_cert_expired_email($days, $domain, $email, $raw_cert) {
           'List-Unsubscribe: <https://' . $current_link . "/unsubscribe.php?id=" . $id . ">" . "\r\n" .
           'X-Mailer: PHP/4.1.1';  
 
-      if (mail($to, $subject, $message, $headers) === true) {
+      if (mailgun($to, $subject, $message, $headers) == true) {
           echo "\nExpired x days ago mail sent to $to.\n";
           return true;
       } else {
@@ -131,7 +131,31 @@ function send_cert_expired_email($days, $domain, $email, $raw_cert) {
   }
   
 }
-
+function mailgun($to, $subject, $message, $headers) {
+    $domain = "yourdomain.org";
+    $config = array();
+    $config['api_key'] = "XXXXXXXXXXXXXXXXXXX";
+    $config['api_url'] = "https://api.mailgun.net/v3/" . $domain . "/messages";
+    $boby = array();
+    $body['from'] = "Mailgun Sandbox <postmaster@yourfromemail.mailgun.org>";
+    $body['to'] = $to;
+    $body['h:Reply-To'] = $headers;
+    $body['subject'] = $subject;
+    $body['html'] = $message;
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $config['api_url']);
+    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($curl, CURLOPT_USERPWD, "api:{$config['api_key']}");
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
+    $result = curl_exec($curl);
+    curl_close($curl);
+    return $result;
+}
 function send_expires_in_email($days, $domain, $email, $raw_cert) {
   global $current_domain;
   global $current_link;
@@ -182,7 +206,7 @@ function send_expires_in_email($days, $domain, $email, $raw_cert) {
           'List-Unsubscribe: <https://' . $current_link . "/unsubscribe.php?id=" . $id . ">" . "\r\n" .
           'X-Mailer: PHP/4.1.1';  
 
-      if (mail($to, $subject, $message, $headers) === true) {
+      if (mailgun($to, $subject, $message, $headers) == true) {
           echo "\nExpires in mail sent to $to.\n";
           return true;
       } else {
@@ -192,6 +216,5 @@ function send_expires_in_email($days, $domain, $email, $raw_cert) {
     } 
   }
 }
-
 
 ?>
